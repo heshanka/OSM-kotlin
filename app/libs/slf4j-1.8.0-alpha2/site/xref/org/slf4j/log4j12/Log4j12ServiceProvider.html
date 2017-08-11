@@ -1,0 +1,69 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>Log4j12ServiceProvider xref</title>
+<link type="text/css" rel="stylesheet" href="../../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../../apidocs/org/slf4j/log4j12/Log4j12ServiceProvider.html">View Javadoc</a></div><pre>
+
+<a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> org.slf4j.log4j12;
+<a class="jxr_linenumber" name="2" href="#2">2</a>   
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> org.apache.log4j.Level;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   <strong class="jxr_keyword">import</strong> org.slf4j.ILoggerFactory;
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">import</strong> org.slf4j.IMarkerFactory;
+<a class="jxr_linenumber" name="6" href="#6">6</a>   <strong class="jxr_keyword">import</strong> org.slf4j.helpers.BasicMarkerFactory;
+<a class="jxr_linenumber" name="7" href="#7">7</a>   <strong class="jxr_keyword">import</strong> org.slf4j.helpers.Util;
+<a class="jxr_linenumber" name="8" href="#8">8</a>   <strong class="jxr_keyword">import</strong> org.slf4j.spi.MDCAdapter;
+<a class="jxr_linenumber" name="9" href="#9">9</a>   <strong class="jxr_keyword">import</strong> org.slf4j.spi.SLF4JServiceProvider;
+<a class="jxr_linenumber" name="10" href="#10">10</a>  
+<a class="jxr_linenumber" name="11" href="#11">11</a>  <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../../org/slf4j/log4j12/Log4j12ServiceProvider.html">Log4j12ServiceProvider</a> <strong class="jxr_keyword">implements</strong> <a href="../../../org/slf4j/spi/SLF4JServiceProvider.html">SLF4JServiceProvider</a> {
+<a class="jxr_linenumber" name="12" href="#12">12</a>  
+<a class="jxr_linenumber" name="13" href="#13">13</a>      <em class="jxr_javadoccomment">/**</em>
+<a class="jxr_linenumber" name="14" href="#14">14</a>  <em class="jxr_javadoccomment">     * Declare the version of the SLF4J API this implementation is compiled against. </em>
+<a class="jxr_linenumber" name="15" href="#15">15</a>  <em class="jxr_javadoccomment">     * The value of this field is modified with each major release. </em>
+<a class="jxr_linenumber" name="16" href="#16">16</a>  <em class="jxr_javadoccomment">     */</em>
+<a class="jxr_linenumber" name="17" href="#17">17</a>      <em class="jxr_comment">// to avoid constant folding by the compiler, this field must *not* be final</em>
+<a class="jxr_linenumber" name="18" href="#18">18</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> String REQUESTED_API_VERSION = <span class="jxr_string">"1.8.99"</span>; <em class="jxr_comment">// !final</em>
+<a class="jxr_linenumber" name="19" href="#19">19</a>  
+<a class="jxr_linenumber" name="20" href="#20">20</a>      <strong class="jxr_keyword">private</strong> <a href="../../../org/slf4j/ILoggerFactory.html">ILoggerFactory</a> loggerFactory; 
+<a class="jxr_linenumber" name="21" href="#21">21</a>      <strong class="jxr_keyword">private</strong> <a href="../../../org/slf4j/IMarkerFactory.html">IMarkerFactory</a> markerFactory; 
+<a class="jxr_linenumber" name="22" href="#22">22</a>      <strong class="jxr_keyword">private</strong> <a href="../../../org/slf4j/spi/MDCAdapter.html">MDCAdapter</a> mdcAdapter;
+<a class="jxr_linenumber" name="23" href="#23">23</a>      
+<a class="jxr_linenumber" name="24" href="#24">24</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/slf4j/log4j12/Log4j12ServiceProvider.html">Log4j12ServiceProvider</a>() {
+<a class="jxr_linenumber" name="25" href="#25">25</a>          <strong class="jxr_keyword">try</strong> {
+<a class="jxr_linenumber" name="26" href="#26">26</a>              @SuppressWarnings(<span class="jxr_string">"unused"</span>)
+<a class="jxr_linenumber" name="27" href="#27">27</a>              Level level = Level.TRACE;
+<a class="jxr_linenumber" name="28" href="#28">28</a>          } <strong class="jxr_keyword">catch</strong> (NoSuchFieldError nsfe) {
+<a class="jxr_linenumber" name="29" href="#29">29</a>              Util.report(<span class="jxr_string">"This version of SLF4J requires log4j version 1.2.12 or later. See also http://www.slf4j.org/codes.html#log4j_version"</span>);
+<a class="jxr_linenumber" name="30" href="#30">30</a>          }
+<a class="jxr_linenumber" name="31" href="#31">31</a>      }
+<a class="jxr_linenumber" name="32" href="#32">32</a>  
+<a class="jxr_linenumber" name="33" href="#33">33</a>      @Override
+<a class="jxr_linenumber" name="34" href="#34">34</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">void</strong> initialize() {
+<a class="jxr_linenumber" name="35" href="#35">35</a>          loggerFactory = <strong class="jxr_keyword">new</strong> <a href="../../../org/slf4j/log4j12/Log4jLoggerFactory.html">Log4jLoggerFactory</a>();
+<a class="jxr_linenumber" name="36" href="#36">36</a>          markerFactory = <strong class="jxr_keyword">new</strong> <a href="../../../org/slf4j/helpers/BasicMarkerFactory.html">BasicMarkerFactory</a>();
+<a class="jxr_linenumber" name="37" href="#37">37</a>          mdcAdapter = <strong class="jxr_keyword">new</strong> <a href="../../../org/slf4j/log4j12/Log4jMDCAdapter.html">Log4jMDCAdapter</a>();
+<a class="jxr_linenumber" name="38" href="#38">38</a>      }
+<a class="jxr_linenumber" name="39" href="#39">39</a>      
+<a class="jxr_linenumber" name="40" href="#40">40</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/slf4j/ILoggerFactory.html">ILoggerFactory</a> getLoggerFactory() {
+<a class="jxr_linenumber" name="41" href="#41">41</a>          <strong class="jxr_keyword">return</strong> loggerFactory;
+<a class="jxr_linenumber" name="42" href="#42">42</a>      }
+<a class="jxr_linenumber" name="43" href="#43">43</a>  
+<a class="jxr_linenumber" name="44" href="#44">44</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/slf4j/IMarkerFactory.html">IMarkerFactory</a> getMarkerFactory() {
+<a class="jxr_linenumber" name="45" href="#45">45</a>          <strong class="jxr_keyword">return</strong> markerFactory;
+<a class="jxr_linenumber" name="46" href="#46">46</a>      }
+<a class="jxr_linenumber" name="47" href="#47">47</a>  
+<a class="jxr_linenumber" name="48" href="#48">48</a>      <strong class="jxr_keyword">public</strong> <a href="../../../org/slf4j/spi/MDCAdapter.html">MDCAdapter</a> getMDCAdapter() {
+<a class="jxr_linenumber" name="49" href="#49">49</a>          <strong class="jxr_keyword">return</strong> mdcAdapter;
+<a class="jxr_linenumber" name="50" href="#50">50</a>      }
+<a class="jxr_linenumber" name="51" href="#51">51</a>  
+<a class="jxr_linenumber" name="52" href="#52">52</a>      <strong class="jxr_keyword">public</strong> String getRequesteApiVersion() {
+<a class="jxr_linenumber" name="53" href="#53">53</a>          <strong class="jxr_keyword">return</strong> REQUESTED_API_VERSION;
+<a class="jxr_linenumber" name="54" href="#54">54</a>      }
+<a class="jxr_linenumber" name="55" href="#55">55</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+

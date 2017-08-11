@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<title>OutputVerifier xref</title>
+<link type="text/css" rel="stylesheet" href="../../stylesheet.css" />
+</head>
+<body>
+<div id="overview"><a href="../../../testapidocs/org/slf4j/OutputVerifier.html">View Javadoc</a></div><pre>
+
+<a class="jxr_linenumber" name="1" href="#1">1</a>   <strong class="jxr_keyword">package</strong> org.slf4j;
+<a class="jxr_linenumber" name="2" href="#2">2</a>   
+<a class="jxr_linenumber" name="3" href="#3">3</a>   <strong class="jxr_keyword">import</strong> <strong class="jxr_keyword">static</strong> junit.framework.Assert.assertTrue;
+<a class="jxr_linenumber" name="4" href="#4">4</a>   
+<a class="jxr_linenumber" name="5" href="#5">5</a>   <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">class</strong> <a href="../../org/slf4j/OutputVerifier.html">OutputVerifier</a> {
+<a class="jxr_linenumber" name="6" href="#6">6</a>   
+<a class="jxr_linenumber" name="7" href="#7">7</a>       <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> noProvider(<a href="../../org/slf4j/StringPrintStream.html">StringPrintStream</a> sps) {
+<a class="jxr_linenumber" name="8" href="#8">8</a>           dump(sps);
+<a class="jxr_linenumber" name="9" href="#9">9</a>           <strong class="jxr_keyword">int</strong> lineCount = sps.stringList.size();
+<a class="jxr_linenumber" name="10" href="#10">10</a>          assertTrue(<span class="jxr_string">"number of lines should be 6 but was "</span> + lineCount, lineCount == 6);
+<a class="jxr_linenumber" name="11" href="#11">11</a>  
+<a class="jxr_linenumber" name="12" href="#12">12</a>          <em class="jxr_comment">// expected output: (version 1.8)</em>
+<a class="jxr_linenumber" name="13" href="#13">13</a>          <em class="jxr_comment">// SLF4J: No SLF4J providers were found.</em>
+<a class="jxr_linenumber" name="14" href="#14">14</a>          <em class="jxr_comment">// SLF4J: Defaulting to no-operation (NOP) logger implementation</em>
+<a class="jxr_linenumber" name="15" href="#15">15</a>          <em class="jxr_comment">// SLF4J: See http://www.slf4j.org/codes.html#noProviders for further details.</em>
+<a class="jxr_linenumber" name="16" href="#16">16</a>          <em class="jxr_comment">// SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions prior to 1.8.</em>
+<a class="jxr_linenumber" name="17" href="#17">17</a>          <em class="jxr_comment">// SLF4J: Ignoring binding found at</em>
+<a class="jxr_linenumber" name="18" href="#18">18</a>          <em class="jxr_comment">// [jar:file:..../slf4j-simple-1.4.2.jar!/org/slf4j/impl/StaticLoggerBinder.class]</em>
+<a class="jxr_linenumber" name="19" href="#19">19</a>          <em class="jxr_comment">// SLF4J: See http://www.slf4j.org/codes.html#ignoredBindings for an explanation.</em>
+<a class="jxr_linenumber" name="20" href="#20">20</a>  
+<a class="jxr_linenumber" name="21" href="#21">21</a>          {
+<a class="jxr_linenumber" name="22" href="#22">22</a>              String s = (String) sps.stringList.get(0);
+<a class="jxr_linenumber" name="23" href="#23">23</a>              assertTrue(s.contains(<span class="jxr_string">"No SLF4J providers were found."</span>));
+<a class="jxr_linenumber" name="24" href="#24">24</a>          }
+<a class="jxr_linenumber" name="25" href="#25">25</a>          {
+<a class="jxr_linenumber" name="26" href="#26">26</a>              String s = (String) sps.stringList.get(1);
+<a class="jxr_linenumber" name="27" href="#27">27</a>              assertTrue(s.contains(<span class="jxr_string">"Defaulting to no-operation (NOP) logger implementation"</span>));
+<a class="jxr_linenumber" name="28" href="#28">28</a>          }
+<a class="jxr_linenumber" name="29" href="#29">29</a>          {
+<a class="jxr_linenumber" name="30" href="#30">30</a>              String s = (String) sps.stringList.get(2);
+<a class="jxr_linenumber" name="31" href="#31">31</a>              assertTrue(s.contains(<span class="jxr_string">"SLF4J: See http://www.slf4j.org/codes.html#noProviders for further details."</span>));
+<a class="jxr_linenumber" name="32" href="#32">32</a>          }
+<a class="jxr_linenumber" name="33" href="#33">33</a>  
+<a class="jxr_linenumber" name="34" href="#34">34</a>          {
+<a class="jxr_linenumber" name="35" href="#35">35</a>              String s = (String) sps.stringList.get(3);
+<a class="jxr_linenumber" name="36" href="#36">36</a>              assertTrue(s.contains(<span class="jxr_string">"SLF4J: Class path contains SLF4J bindings targeting slf4j-api versions prior to 1.8."</span>));
+<a class="jxr_linenumber" name="37" href="#37">37</a>          }
+<a class="jxr_linenumber" name="38" href="#38">38</a>  
+<a class="jxr_linenumber" name="39" href="#39">39</a>          {
+<a class="jxr_linenumber" name="40" href="#40">40</a>              String s = (String) sps.stringList.get(4);
+<a class="jxr_linenumber" name="41" href="#41">41</a>              assertTrue(s.contains(<span class="jxr_string">"Ignoring binding found at"</span>));
+<a class="jxr_linenumber" name="42" href="#42">42</a>          }
+<a class="jxr_linenumber" name="43" href="#43">43</a>          {
+<a class="jxr_linenumber" name="44" href="#44">44</a>              String s = (String) sps.stringList.get(5);
+<a class="jxr_linenumber" name="45" href="#45">45</a>              assertTrue(s.contains(<span class="jxr_string">"See http://www.slf4j.org/codes.html#ignoredBindings for an explanation"</span>));
+<a class="jxr_linenumber" name="46" href="#46">46</a>          }
+<a class="jxr_linenumber" name="47" href="#47">47</a>      }
+<a class="jxr_linenumber" name="48" href="#48">48</a>  
+<a class="jxr_linenumber" name="49" href="#49">49</a>      <strong class="jxr_keyword">public</strong> <strong class="jxr_keyword">static</strong> <strong class="jxr_keyword">void</strong> dump(<a href="../../org/slf4j/StringPrintStream.html">StringPrintStream</a> sps) {
+<a class="jxr_linenumber" name="50" href="#50">50</a>          <strong class="jxr_keyword">for</strong> (String s : sps.stringList) {
+<a class="jxr_linenumber" name="51" href="#51">51</a>              System.out.println(s);
+<a class="jxr_linenumber" name="52" href="#52">52</a>          }
+<a class="jxr_linenumber" name="53" href="#53">53</a>      }
+<a class="jxr_linenumber" name="54" href="#54">54</a>  }
+</pre>
+<hr/><div id="footer">This page was automatically generated by <a href="http://maven.apache.org/">Maven</a></div></body>
+</html>
+
