@@ -26,7 +26,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         //pass location as argument
-        onLocationChanged(mylocation.lastFix)
+        //not sure
+        //onLocationChanged(mylocation.lastFix)
     }
 
     fun onLocationChanged(location: Location):Unit {
