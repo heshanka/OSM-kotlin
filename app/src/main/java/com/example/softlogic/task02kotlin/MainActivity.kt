@@ -1,50 +1,48 @@
 package com.example.softlogic.task02kotlin
 
-import android.location.Location
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import org.osmdroid.views.MapView;
-import org.osmdroid.tileprovider.tilesource.ITileSource
-import org.osmdroid.tileprovider.tilesource.MapBoxTileSource
+import android.location.Location
+import android.location.LocationManager
+import android.location.LocationListener
+
+import org.osmdroid.api.IMapController
 import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
-import org.osmdroid.util.LocationUtils
-import org.osmdroid.views.MapController
-import org.osmdroid.views.overlay.mylocation.GpsMyLocationProvider
+import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.mylocation.MyLocationNewOverlay
-
+import org.osmdroid.tileprovider.constants.OpenStreetMapTileProviderConstants
 
 class MainActivity : AppCompatActivity() {
-
-    var m: MapController? = null
-    var mv: MapView? = null
-    var mylocation = MyLocationNewOverlay(GpsMyLocationProvider(applicationContext), mv)
-
-    //mylocation.enableFollowLocation();
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        //pass location as argument
-        //not sure
-        //onLocationChanged(mylocation.lastFix)
+
+
+        val mapView = findViewById(R.id.mapview) as MapView
+        mapView.isClickable = true
+        mapView.setBuiltInZoomControls(true)
+        mapView.setMultiTouchControls(true)
+        mapView.setUseDataConnection(true)
+        mapView.setTileSource(TileSourceFactory.MAPQUESTOSM)
+
+        val myLocationOverlay = MyLocationNewOverlay(applicationContext, mapView)
+        mapView.overlays.add(myLocationOverlay)
+        myLocationOverlay.enableMyLocation()
+        myLocationOverlay.enableFollowLocation()
+
+        val mapViewController = mapView.controller
+        mapViewController.setZoom(16)
+        mapViewController.setCenter(SCHOOL)
+
+
     }
 
-    fun onLocationChanged(location: Location):Unit {
+    companion object {
 
-        val latitude = location.latitude
-        val longitude = location.longitude
-        val altitude = location.altitude
-        val accuracy = location.accuracy
-
-        val p = GeoPoint(latitude, longitude)
-
-        m?.animateTo(p);
-        m?.setCenter(p);
-
-
-
-        mylocation.enableMyLocation();
-        mv?.getOverlays()?.add(mylocation)
+        protected val PROVIDER_NAME = LocationManager.GPS_PROVIDER
+        val SCHOOL = GeoPoint(33.989820, -81.029123)
     }
+
 }
