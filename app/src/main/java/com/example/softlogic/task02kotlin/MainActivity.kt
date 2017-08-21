@@ -42,7 +42,10 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         protected val PROVIDER_NAME = LocationManager.GPS_PROVIDER
-        val SCHOOL = GeoPoint(33.989820, -81.029123)
+        
+        //Give the latitude and longitude of the area on the map
+        
+        val Somewhere = GeoPoint(33.989820, -81.029123)
     }
 
 }
