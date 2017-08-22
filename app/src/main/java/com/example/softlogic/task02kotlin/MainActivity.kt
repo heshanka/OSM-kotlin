@@ -18,13 +18,18 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
+        
+        var exit = findViewById(R.id.imageButton2) as ImageButton
+        
         val mapView = findViewById(R.id.mapview) as MapView
         mapView.isClickable = true
         mapView.setBuiltInZoomControls(true)
         mapView.setMultiTouchControls(true)
+        //Set below to False to check if it works offline
         mapView.setUseDataConnection(true)
+        
+        //You should replace the tilesourcefactory as required according to the tiles you are using
+        //Below MAPQUESTOSM is the name of the tile source, it may change e.g.Mapnik
         mapView.setTileSource(TileSourceFactory.MAPQUESTOSM)
 
         val myLocationOverlay = MyLocationNewOverlay(applicationContext, mapView)
@@ -34,7 +39,13 @@ class MainActivity : AppCompatActivity() {
 
         val mapViewController = mapView.controller
         mapViewController.setZoom(16)
-        mapViewController.setCenter(SCHOOL)
+        mapViewController.setCenter(Somewhere)
+        
+        //Exit button closing app
+        exit.setOnClickListener {
+            //Finish method is used to close all open activities.
+            finish()
+        }
 
 
     }
@@ -43,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         protected val PROVIDER_NAME = LocationManager.GPS_PROVIDER
         
-        //Give the latitude and longitude of the area on the map
+        //Give the latitude and longitude of the area on the map to view it
         
         val Somewhere = GeoPoint(33.989820, -81.029123)
     }
