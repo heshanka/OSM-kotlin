@@ -12,19 +12,16 @@ from any osm supporting application or website*.
 (This usually happens automatically.)
 
 That's it!
-==============================
 
 The application will now track you according to your location on the map
 and follow your location as well.
 
 You don't need to have access to the internet for your location to update
-on the map as well!
+on the map now.
 
 ============================================================
 ============================================================
 TESTING THE CODE
-=============================================================
-============================================================
 
 In order to be able to test this code, appropriate maps should be
 downloaded and the *geopoint* values need to be set accordingly.
