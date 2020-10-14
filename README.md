@@ -12,7 +12,7 @@ from any osm supporting application or website*.
 (This usually happens automatically.)
 
 That's it!
-============================================
+===================================
 
 The application will now track you according to your location on the map
 and follow your location as well.
